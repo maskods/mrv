@@ -1,37 +1,14 @@
+from numpy import matrix, linalg
 import numpy as np
-import sys
-
-
-n = int(input("Masukkan Banyaknya Variabel : "))
-m = int(input("Masukkan Banyaknya Persamaan : "))
-
-augmented_matrix = np.zeros((n, n+1))
-result = np.zeros(n)
-
-print("Masukkan Koefisien Persamaan : ")
-for i in range(n):
-    for j in range(n+1):
-        augmented_matrix[i][j] = float(input())
-
-# Gauss Jordan Elimination
-for i in range(n):
-    if augmented_matrix[i][i] == 0.0: 
-        break
-    for j in range(n):
-        if i != j:
-            ratio = augmented_matrix[j][i] / augmented_matrix[i][i]
-        
-            for k in range(n+1):
-                augmented_matrix[j][k] = augmented_matrix[j][k] - ratio * augmented_matrix[i][k]
-            
-# Obtaining
-
-
-for i in range(n):
-    result[i] = augmented_matrix[i][n]/augmented_matrix[i][i]
-    
-    
-# Output Result
-print("Hasil : ")
-for i in range(n):
-    print("X%d = %0.2f" %(i+1, result[i]), end = "\t")
+matrix_A = np.array([[1, 7, -2, 0, 8],[1, 7, -1, 1, 0],[2, 14, -4, 1, -13], [2, 14, -4, 0, 16]])
+print('matrix_A')
+print(matrix_A)
+matrix_B = np.array([[-3],[2],[3],[-6]])
+print('matrix_B')
+print(matrix_B)
+print("Knowing that 'A * A_inv = I', the solution comes down to 'S = A_inv * B'")
+matrix_A_inv = linalg.inv(matrix_A)
+print(matrix_A_inv)
+matrix_S = np.matmul(matrix_A_inv, matrix_B)
+print('matrix_S')
+print(matrix_S)
