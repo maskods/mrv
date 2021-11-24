@@ -38,3 +38,5 @@ for i in range(n):
 print("Hasil : ")
 for i in range(n):
     print("X%d = %0.2f" %(i+1, result[i]), end = "\t") 
+    
+# Gauss Jordan Done!
