@@ -59,8 +59,10 @@ for i in range(1, n):
                         augmented_matrix[i-l-1][k] -= temp * augmented_matrix[i][k]
                     res_matrix[i-l-1] -= temp * res_matrix[i]
                 break
-    print(augmented_matrix)
-    print(res_matrix)
+            
+            
+print(augmented_matrix)
+print(res_matrix)
                 
 
 
