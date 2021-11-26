@@ -1,22 +1,6 @@
 import re
 import numpy as np
 
-# n = int(input("Masukkan Banyaknya Variabel : "))
-# m = int(input("Masukkan Banyaknya Persamaan : "))
-
-# augmented_matrix = np.zeros((n, n))
-# res_matrix = np.zeros(n)
-# result = np.zeros(n)
-
-# print("Masukkan Koefisien Persamaan : ")
-
-# for i in range(m):
-#     temp = input()
-#     temp = temp.split()
-#     for j in range(n):
-#         augmented_matrix[i][j] = temp[j] 
-#     res_matrix[i] = temp[n]
-
 def count(n, m, augmented_matrix, res_matrix):
     # Gauss Elimination
     result = np.zeros((m, n+1))

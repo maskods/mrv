@@ -2,21 +2,6 @@ import re
 import numpy as np
 import sys
 
-# n = int(input("Masukkan Banyaknya Variabel : "))
-# m = int(input("Masukkan Banyaknya Persamaan : "))
-
-# augmented_matrix = np.zeros((n, n+1))
-# result = np.zeros(n)
-
-# print("Masukkan Koefisien Persamaan : ")
-
-# # Input with Console
-# for i in range(m):
-#     temp = input()
-#     temp = temp.split()
-#     for j in range(n+1):
-#         augmented_matrix[i][j] = temp[j]
-
 def count(n, m, augmented_matrix):
     # Gauss Jordan Elimination
     result = np.zeros(n)
