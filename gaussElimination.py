@@ -57,14 +57,12 @@ def count(n, m, augmented_matrix, res_matrix):
         for j in range(n):
             if(result[i][j] == 1):
                 tempPers = "X" + str(j+1) + " = " + str(result[i][n]) 
-                # print("X%d = %d" % (i+1, result[i][n]))
                 for k in range(j+1, n):
                     if result[i][k] == 0: continue
                     result[i][k] *= -1
                     if result[i][k] < 0 and k != j: tempPers += " - "
                     else: tempPers += " + "
                     tempPers += str(abs(result[i][k])) + "X" + str(k+1)
-                    # print(" %dX%d" % (abs(result[i][k]), k+1))
                 print(tempPers)
             
 

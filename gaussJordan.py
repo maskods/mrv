@@ -22,7 +22,6 @@ def count(n, m, augmented_matrix):
 
 
     # Output Result
-    
     print("Jadi, dari matriks tersebut didapatkan : ")
     for i in range(n):
         print("X%d = %.2f" % (i+1, result[i]))
