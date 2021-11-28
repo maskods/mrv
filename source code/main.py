@@ -43,7 +43,7 @@ def matriksGaussEl():
         # Input with File
         file = input("Masukkan Nama File : ")
         lines = []
-        with open("test/"+file) as f:
+        with open("../test/"+file) as f:
             lines = f.readlines()
         n = len(lines[0].split())-1
         m = len(lines)
@@ -90,7 +90,7 @@ def inputInterpolasi():
     elif choice == 2:
         file = input("Masukkan Nama File : ")
         lines = []
-        with open("test/"+file) as f:
+        with open("../test/"+file) as f:
             lines = f.readlines()
         
         n = len(lines)

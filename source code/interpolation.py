@@ -15,6 +15,6 @@ def count(n, Xp, x, y):
     
     print("Prediksi Harga pada Tahun %d adalah %.3f" % (Xp, Yp))
     uniqueId = random.randint(00000,99999)
-    f = open("result/"+str(uniqueId)+".txt", "w")
+    f = open("../test/result/"+str(uniqueId)+".txt", "w")
     f.write("Prediksi Harga pada Tahun %d adalah %.3f" % (Xp, Yp))
-    print("Jawaban sudah disimpan dalam folder result/%s.txt" % str(uniqueId))
+    print("Jawaban sudah disimpan dalam folder test/result/%s.txt" % str(uniqueId))

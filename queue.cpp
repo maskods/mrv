@@ -1,102 +1,127 @@
-#include <iostream>
+// C++ Implementation for Gauss-Jordan
+// Elimination Method
+#include <bits/stdc++.h>
 using namespace std;
 
-#define MaxEl 5
+#define M 10
 
-typedef int address;
-typedef struct{
-    address head, tail;
-    string nama[MaxEl], asal[MaxEl];
-    int umur[MaxEl];
-} Queue;
-
-#define Head(Q) (Q).head
-#define Tail(Q) (Q).tail
-#define namaHead(Q) (Q).nama[(Q).head]
-#define asalHead(Q) (Q).asal[(Q).head]
-#define umurHead(Q) (Q).umur[(Q).head]
-#define namaTail(Q) (Q).nama[(Q).tail]
-#define asalTail(Q) (Q).asal[(Q).tail]
-#define umurTail(Q) (Q).umur[(Q).tail]
-
-bool isEmpty(Queue Q){
-    return ((Head(Q) == 0) && (Tail(Q) == 0));
+// Function to print the matrix
+void PrintMatrix(float a[][M], int n)
+{
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j <= n; j++)
+		cout << a[i][j] << " ";
+		cout << endl;
+	}
 }
 
-int nbElmt(Queue Q){
-    if(isEmpty(Q)) return 0;
+// function to reduce matrix to reduced
+// row echelon form.
+int PerformOperation(float a[][M], int n)
+{
+	int i, j, k = 0, c, flag = 0, m = 0;
+	float pro = 0;
+	
+	// Performing elementary operations
+	for (i = 0; i < n; i++)
+	{
+		if (a[i][i] == 0)
+		{
+			c = 1;
+			while ((i + c) < n && a[i + c][i] == 0)
+				c++;		
+			if ((i + c) == n) {
+				flag = 1;
+				break;
+			}
+			for (j = i, k = 0; k <= n; k++)
+				swap(a[j][k], a[j+c][k]);
+		}
 
-    if(Head(Q) <= Tail(Q)) return (Tail(Q) - Head(Q) + 1);
-    else return (MaxEl - Head(Q) + Tail(Q) + 1);
+		for (j = 0; j < n; j++) {
+			
+			// Excluding all i == j
+			if (i != j) {
+				
+				// Converting Matrix to reduced row
+				// echelon form(diagonal matrix)
+				float pro = a[j][i] / a[i][i];
+
+				for (k = 0; k <= n; k++)				
+					a[j][k] = a[j][k] - (a[i][k]) * pro;			
+			}
+		}
+	}
+	return flag;
 }
 
-bool isFull(Queue Q){
-    return (nbElmt(Q) == MaxEl);
+// Function to print the desired result
+// if unique solutions exists, otherwise
+// prints no solution or infinite solutions
+// depending upon the input given.
+void PrintResult(float a[][M], int n, int flag)
+{
+	cout << "Result is : ";
+
+	if (flag == 2)	
+	cout << "Infinite Solutions Exists" << endl;
+	else if (flag == 3)	
+	cout << "No Solution Exists" << endl;
+	
+	
+	// Printing the solution by dividing constants by
+	// their respective diagonal elements
+	else {
+		for (int i = 0; i < n; i++)		
+			cout << a[i][n] / a[i][i] << " ";	
+	}
 }
 
-void createEmpty(Queue *Q){
-    Head(*Q) = 0;
-    Tail(*Q) = 0;
+// To check whether infinite solutions
+// exists or no solution exists
+int CheckConsistency(float a[][M], int n, int flag)
+{
+	int i, j;
+	float sum;
+	
+	// flag == 2 for infinite solution
+	// flag == 3 for No solution
+	flag = 3;
+	for (i = 0; i < n; i++)
+	{
+		sum = 0;
+		for (j = 0; j < n; j++)	
+			sum = sum + a[i][j];
+		if (sum == a[i][j])
+			flag = 2;	
+	}
+	return flag;
 }
 
-void add(Queue *Q, string nama, string asal, int umur){
-    if(isFull(*Q)){
-        cout << "Queue Penuh\n";
-    } else{
-        if(isEmpty(*Q)){
-            Head(*Q) = 1;
-            Tail(*Q) = 1;
-        } else{
-            if(Tail(*Q) == MaxEl) Tail(*Q) = 1;
-            else Tail(*Q)++;
-        } 
-    }
-        
-    namaTail(*Q) = nama;
-    asalTail(*Q) = asal;
-    umurTail(*Q) = umur;
-}
+// Driver code
+int main()
+{
+	float a[M][M] = {{1, 7, -2, 0, 8, -3 },
+					{1, 7, -1, 1, 0, 2 },
+					{2, 14, -4, 1, -13, 3},
+                    {2, 14, -4, 0, 16, -6}};
+					
+	// Order of Matrix(n)
+	int n = 4, flag = 0;
+	
+	// Performing Matrix transformation
+	flag = PerformOperation(a, n);
+	
+	if (flag == 1)	
+		flag = CheckConsistency(a, n, flag);
 
-void Del(Queue *Q, int *hapus){
-    *hapus = umurHead(*Q);
-    if(Tail(*Q) == Head(*Q)){
-        Head(*Q) = 0;
-        Tail(*Q) = 0;
-    } else{
-        if(Head(*Q) == MaxEl) Head(*Q) = 1;
-        else Head(*Q)++;
-    }
-        
-}
+	// Printing Final Matrix
+	cout << "Final Augumented Matrix is : " << endl;
+	PrintMatrix(a, n);
+	cout << endl;
+	
+	// Printing Solutions(if exist)
+	PrintResult(a, n, flag);
 
-
-int main(){
-    Queue dataAntrian;
-    int hapus, n, umur;
-    string nama, asal;
-    createEmpty(&dataAntrian);
-    cin >> n;
-
-    while(n--){
-        cout << "Nama : ";
-        cin >> nama;
-
-        cout << "Umur(Tahun) : ";
-        cin >> umur;
-        cin.ignore();
-        cout << "Asal : ";
-        getline(cin, asal);
-
-        add(&dataAntrian, nama, asal, umur);
-        cout << endl;
-    }
-
-    int i = 1;
-    cout << "No\tNama\tUmur\t\tAsal\n";
-    while(Head(dataAntrian)){
-        cout << i << "\t" << namaHead(dataAntrian) << "\t" << umurHead(dataAntrian) << "Tahun\t\t" << asalHead(dataAntrian) <<"\n";
-        Del(&dataAntrian, &hapus);
-    }
-
-    return 0;
+	return 0;
 }

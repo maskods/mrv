@@ -30,7 +30,7 @@ def count(n, m, augmented_matrix, res_matrix):
                     augmented_matrix[i][k] /= temp
                 res_matrix[i] /= temp
                 break
-    # print(augmented_matrix)
+
     for i in range(1, n):
         if augmented_matrix[i][i] == 1 and augmented_matrix[i-1][i] != 0:
             for l in range (i):
@@ -67,7 +67,7 @@ def count(n, m, augmented_matrix, res_matrix):
                 print("")
     
     uniqueId = random.randint(00000,99999)
-    f = open("result/"+str(uniqueId)+".txt", "w")
+    f = open("../test/result/"+str(uniqueId)+".txt", "w")
     for i in range(m):
         tempPers = ""
         for j in range(n):
@@ -80,10 +80,10 @@ def count(n, m, augmented_matrix, res_matrix):
                     else: tempPers += "+ "
                     tempPers += str(abs(result[i][k])) + "X" + str(k+1)
                 tempPers += "\n"
-                f = open("result/"+str(uniqueId)+".txt", "a")
+                f = open("../test/result/"+str(uniqueId)+".txt", "a")
                 f.write(tempPers)
                 f.close()
-    print("Jawaban sudah disimpan dalam folder result/" + str(uniqueId) + ".txt") 
+    print("Jawaban sudah disimpan dalam folder test/result/" + str(uniqueId) + ".txt") 
                 
             
 
