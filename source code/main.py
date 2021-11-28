@@ -12,7 +12,8 @@ def clearConsole():
 def menu():
     print("======= M E N U =======")
     print("1. Sistem Persamaan Linier")
-    print("2. Interpolasi")
+    print("2. Matriks Hilbert")
+    print("3. Interpolasi")
 
 def choiceMenu():
     clearConsole()
@@ -61,14 +62,15 @@ def matriksGaussEl():
     
 
 def matriksHilbert():
+    clearConsole()
     n = int(input("Masukkan N : "))
     augmented_matrix = np.zeros((n, n))
-    res_matrix = np.ones((n, 1))
+    res_matrix = np.ones((n))
     
     for i in range(n):
         for j in range(n):
             augmented_matrix[i][j] = 1 / (i+j+1)
-    gaussEl.count(n, m, augmented_matrix, res_matrix)
+    gaussEl.count(n, n, augmented_matrix, res_matrix)
 
 def inputInterpolasi():
     choiceMenu()
@@ -113,7 +115,9 @@ choice = int(input("Pilih Menu : "))
 
 if(choice == 1):
     matriksGaussEl()
-elif(choice == 2):
+elif choice == 2:
+    matriksHilbert()
+elif(choice == 3):
     inputInterpolasi()
 else:
     print("Menu yang anda masukkan salah!")
