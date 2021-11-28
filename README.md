@@ -23,5 +23,5 @@ folder doc berisikan laporan yang sudah kami buat<br>
 
 
 # Menjalankan Program
-cd source\ code
+cd source\ code<br>
 python3 main.py
