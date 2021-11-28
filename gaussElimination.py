@@ -1,9 +1,11 @@
 import re
 import numpy as np
+import random
 
 def count(n, m, augmented_matrix, res_matrix):
     # Gauss Elimination
-    result = np.zeros((m, n+1))
+    np.set_printoptions(suppress=True)
+    result = np.zeros((m, n+1), float)
     for k in range(n):
         if np.fabs(augmented_matrix[k,k]) < 1.0e-12:
             for i in range(k+1, n):
@@ -28,11 +30,12 @@ def count(n, m, augmented_matrix, res_matrix):
                     augmented_matrix[i][k] /= temp
                 res_matrix[i] /= temp
                 break
+    # print(augmented_matrix)
     for i in range(1, n):
         if augmented_matrix[i][i] == 1 and augmented_matrix[i-1][i] != 0:
             for l in range (i):
-                    temp = augmented_matrix[i-l-1][j]
-                    for k in range(j, n):
+                    temp = augmented_matrix[i-l-1][i]
+                    for k in range(l, n):
                         augmented_matrix[i-l-1][k] -= temp * augmented_matrix[i][k]
                     res_matrix[i-l-1] -= temp * res_matrix[i]
         else:
@@ -47,23 +50,41 @@ def count(n, m, augmented_matrix, res_matrix):
     
     for i in range(m):
         for j in range(n):
-            result[i][j] = augmented_matrix[i][j]
-        result[i][n] = res_matrix[i]
-        
+            result[i][j] = "{:.2f}".format(augmented_matrix[i][j])
+        result[i][n] = "{:.2f}".format(res_matrix[i])
     print(result)
-    
     print("Jadi, dari matriks tersebut didapatkan : ")
     for i in range(m):
         for j in range(n):
-            if(result[i][j] == 1):
-                tempPers = "X" + str(j+1) + " = " + str(result[i][n]) 
+            if result[i][j] == 1.0:
+                print("X%d = %.2f" % (j+1, result[i][n]), end=" ")
                 for k in range(j+1, n):
                     if result[i][k] == 0: continue
                     result[i][k] *= -1
-                    if result[i][k] < 0 and k != j: tempPers += " - "
-                    else: tempPers += " + "
+                    if result[i][k] < 0 and k != j: print("-", end=" ")
+                    else: print("+", end=" ")
+                    print("%.2fX%d" % (abs(result[i][k]), k+1), end=" ")
+                print("")
+    
+    uniqueId = random.randint(00000,99999)
+    f = open("result/"+str(uniqueId)+".txt", "w")
+    for i in range(m):
+        tempPers = ""
+        for j in range(n):
+            if result[i][j] == 1.0:
+                tempPers = "X" + str(j+1) + " = " + str(result[i][n]) + " "
+                for k in range(j+1, n):
+                    if result[i][k] == 0: continue
+                    result[i][k] *= -1
+                    if result[i][k] < 0 and k != j: tempPers += "- "
+                    else: tempPers += "+ "
                     tempPers += str(abs(result[i][k])) + "X" + str(k+1)
-                print(tempPers)
+                tempPers += "\n"
+                f = open("result/"+str(uniqueId)+".txt", "a")
+                f.write(tempPers)
+                f.close()
+    print("Jawaban sudah disimpan dalam folder result/" + str(uniqueId) + ".txt") 
+                
             
 
 

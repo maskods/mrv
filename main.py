@@ -1,53 +1,110 @@
 import re
+import os
 import numpy as np
 import gaussElimination as gaussEl
-import gaussJordan as gaussJor
+import interpolation as interpol
+
+def clearConsole():
+    command = 'clear'
+    if os.name in ('nt', 'dos'):
+        command = 'cls'
+    os.system(command)
 
 def menu():
     print("======= M E N U =======")
-    print("1. Sistem Persamaan Linier (Gauss Elimination)")
-    print("2. Sistem Persamaan Linier (Gauss Jordan)")
-    print("3. Interpolasi")
+    print("1. Sistem Persamaan Linier")
+    print("2. Interpolasi")
+
+def choiceMenu():
+    clearConsole()
+    print("======= M E N U =====")
+    print("1. Input Melalui Console")
+    print("2. Input Melalui File")
     
 def matriksGaussEl():
-    n = int(input("Masukkan Banyaknya Variabel : "))
-    m = int(input("Masukkan Banyaknya Persamaan : "))
+    choiceMenu()
+    choice = int(input("Pilih : "))
+    
+    if choice == 1 :
+        n = int(input("Masukkan Banyaknya Variabel : "))
+        m = int(input("Masukkan Banyaknya Persamaan : "))
+        print("Masukkan Koefisien Persamaan : ")
+        
+        augmented_matrix = np.zeros((n, n), float)
+        res_matrix = np.zeros(m, float)
+        # Input with Console
+        for i in range(m):
+            temp = input()
+            temp = temp.split()
+            for j in range(n):
+                augmented_matrix[i][j] = temp[j] 
+            res_matrix[i] = temp[n]
+    elif choice == 2:
+        # Input with File
+        file = input("Masukkan Nama File : ")
+        lines = []
+        with open("test/"+file) as f:
+            lines = f.readlines()
+        n = len(lines[0].split())-1
+        m = len(lines)
+        
+        augmented_matrix = np.zeros((n, n), float)
+        res_matrix = np.zeros(m, float)
 
-    augmented_matrix = np.zeros((n, n))
-    res_matrix = np.zeros(n)
-    result = np.zeros(n)
-
-    print("Masukkan Koefisien Persamaan : ")
-
-    for i in range(m):
-        temp = input()
-        temp = temp.split()
-        for j in range(n):
-            augmented_matrix[i][j] = temp[j] 
-        res_matrix[i] = temp[n]
+        for i in range(m):
+            temp = lines[i].split() 
+            for j in range(n):
+                augmented_matrix[i][j] = temp[j]
+            res_matrix[i] = temp[n]
+            
     
     gaussEl.count(n, m, augmented_matrix, res_matrix)
     
 
-def matriksGaussJor():
-    n = int(input("Masukkan Banyaknya Variabel : "))
-    m = int(input("Masukkan Banyaknya Persamaan : "))
-
-    augmented_matrix = np.zeros((n, n+1))
-    result = np.zeros(n)
-
-    print("Masukkan Koefisien Persamaan : ")
-
-    # Input with Console
-    for i in range(m):
-        temp = input()
-        temp = temp.split()
-        for j in range(n+1):
-            augmented_matrix[i][j] = temp[j]
-    gaussJor.count(n, m, augmented_matrix)
+def matriksHilbert():
+    n = int(input("Masukkan N : "))
+    augmented_matrix = np.zeros((n, n))
+    res_matrix = np.ones((n, 1))
     
+    for i in range(n):
+        for j in range(n):
+            augmented_matrix[i][j] = 1 / (i+j+1)
+    gaussEl.count(n, m, augmented_matrix, res_matrix)
+
 def inputInterpolasi():
-    print("inputInterpolasi")
+    choiceMenu()
+    choice = int(input("Pilih : "))
+    
+    if choice == 1 :
+        n = int(input("Masukkan Banyaknya Data : "))
+        x = np.zeros((n))
+        y = np.zeros((n))
+    
+        print("Masukkan Data X Y : ")
+
+        for i in range(n):
+            temp = input()
+            temp = temp.split()
+            x[i] = temp[0]
+            y[i] = temp[1]
+    elif choice == 2:
+        file = input("Masukkan Nama File : ")
+        lines = []
+        with open("test/"+file) as f:
+            lines = f.readlines()
+        
+        n = len(lines)
+        x = np.zeros((n))
+        y = np.zeros((n))
+        for i in range(n):
+            temp = lines[i].split()
+            x[i] = temp[0]
+            y[i] = temp[1]
+    else: 
+        print("Pilihan anda salah!")
+        exit()
+    Xp = float(input("Masukkan Data yang dicari : "))
+    interpol.count(n, Xp, x, y)
     
 menu()
 choice = int(input("Pilih Menu : "))
@@ -55,8 +112,6 @@ choice = int(input("Pilih Menu : "))
 if(choice == 1):
     matriksGaussEl()
 elif(choice == 2):
-    matriksGaussJor()
-elif(choice == 3):
     inputInterpolasi()
 else:
     print("Menu yang anda masukkan salah!")
