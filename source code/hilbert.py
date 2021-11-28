@@ -1,6 +1,6 @@
 import re
 import numpy as np
-import sys
+
 
 n = int(input("Masukkan N : "))
 augmented_matrix = np.zeros((n, n+1))

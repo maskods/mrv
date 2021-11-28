@@ -1,4 +1,3 @@
-import re
 import os
 import numpy as np
 import gaussElimination as gaussEl
@@ -103,8 +102,11 @@ def inputInterpolasi():
     else: 
         print("Pilihan anda salah!")
         exit()
-    Xp = float(input("Masukkan Data yang dicari : "))
-    interpol.count(n, Xp, x, y)
+    m = int(input("Banyak data yang akan anda cari : "))
+    Xp = np.empty(m)
+    for i in range(m):
+        Xp[i] = float(input("%d.Masukkan Data yang dicari : " % (i+1)))
+    interpol.count(n, m, Xp, x, y)
     
 menu()
 choice = int(input("Pilih Menu : "))
