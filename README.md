@@ -1,5 +1,5 @@
 # Anggota 1 
-Nama : Naufal Taufiq Ridwan
+Nama : Naufal Taufiq Ridwan<br>
 NIM : 120140044
 
 # Anggota 2
