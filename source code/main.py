@@ -10,14 +10,14 @@ def clearConsole():
     os.system(command)
 
 def menu():
-    print("======= M E N U =======")
+    print("[+]======= M E N U =======[+]")
     print("1. Sistem Persamaan Linier")
     print("2. Matriks Hilbert")
     print("3. Interpolasi")
 
 def choiceMenu():
     clearConsole()
-    print("======= M E N U =====")
+    print("[+]===== M E N U =====[+]")
     print("1. Input Melalui Console")
     print("2. Input Melalui File")
     
@@ -56,6 +56,9 @@ def matriksGaussEl():
             for j in range(n):
                 augmented_matrix[i][j] = temp[j]
             res_matrix[i] = temp[n]
+    else: 
+        print("Pilihan anda salah!")
+        exit()
             
     
     gaussEl.count(n, m, augmented_matrix, res_matrix)
@@ -82,12 +85,13 @@ def inputInterpolasi():
         y = np.zeros((n))
     
         print("Masukkan Data X Y : ")
-
+        
         for i in range(n):
             temp = input()
             temp = temp.split()
             x[i] = temp[0]
             y[i] = temp[1]
+            
     elif choice == 2:
         file = input("Masukkan Nama File : ")
         lines = []
@@ -101,6 +105,7 @@ def inputInterpolasi():
             temp = lines[i].split()
             x[i] = temp[0]
             y[i] = temp[1]
+            
     else: 
         print("Pilihan anda salah!")
         exit()
@@ -108,8 +113,11 @@ def inputInterpolasi():
     Xp = np.empty(m)
     for i in range(m):
         Xp[i] = float(input("%d.Masukkan Data yang dicari : " % (i+1)))
+        
     interpol.count(n, m, Xp, x, y)
     
+
+# Main Program    
 menu()
 choice = int(input("Pilih Menu : "))
 

@@ -19,7 +19,7 @@ def count(n, m, augmented_matrix, res_matrix):
             for j in range(k,n):
                 augmented_matrix[i,j] = augmented_matrix[k,j] - augmented_matrix[i,j] * factor
             res_matrix[i] = res_matrix[k] - res_matrix[i] * factor
-
+        
     for i in range(n):
         if augmented_matrix[i][i] == 1: continue
         for j in range(i, n):
@@ -46,6 +46,7 @@ def count(n, m, augmented_matrix, res_matrix):
                             augmented_matrix[i-l-1][k] -= temp * augmented_matrix[i][k]
                         res_matrix[i-l-1] -= temp * res_matrix[i]
                     break
+        
     
     for i in range(m):
         for j in range(n):
